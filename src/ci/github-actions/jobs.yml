@@ -26,6 +26,10 @@ runners:
     os: macos-15 # macOS 15 Arm64
     <<: *base-job
 
+  - &job-macos-26
+    os: macos-26 # macOS 26 Arm64
+    <<: *base-job
+
   - &job-windows
     os: windows-2025
     <<: *base-job
@@ -529,6 +533,7 @@ auto:
         --set llvm.link-shared=true
         --set rust.lto=thin
         --set rust.codegen-units=1
+        --set build.ccache=false
       # Aarch64 tooling only needs to support macOS 11.0 and up as nothing else
       # supports the hardware.
       MACOSX_DEPLOYMENT_TARGET: 11.0
@@ -552,7 +557,8 @@ auto:
       # supports the hardware, so only need to test it there.
       MACOSX_DEPLOYMENT_TARGET: 11.0
       MACOSX_STD_DEPLOYMENT_TARGET: 11.0
-    <<: *job-macos
+    # XXX: try macos-26 runners
+    <<: *job-macos-26
 
   ######################
   #  Windows Builders  #
